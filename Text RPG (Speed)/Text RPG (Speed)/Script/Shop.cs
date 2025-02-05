@@ -14,7 +14,7 @@ namespace Text_RPG__Speed_.Script
             {
                 Console.Clear();
                 Console.WriteLine("상점");
-                Console.WriteLine("Gold: " + player.Gold + " G\n"); // player.Gold는 public
+                Console.WriteLine("Gold: " + player.Gold + " G\n"); 
                 Console.WriteLine("1. 아이템 구매");
                 Console.WriteLine("2. 아이템 판매");
                 Console.WriteLine("0. 나가기");
@@ -91,7 +91,7 @@ namespace Text_RPG__Speed_.Script
                 {
                     player.Gold -= selectedItem.Price;
                     inventory.AddItem(new Item(selectedItem));
-                    player.AddOwnedItem(selectedItem.Name); // 구매한 아이템 목록에 추가
+                    player.AddOwnedItem(selectedItem.Name); 
                     Console.WriteLine($"{selectedItem.Name}을(를) 구매했습니다!");
                 }
                 else

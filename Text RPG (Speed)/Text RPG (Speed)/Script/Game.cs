@@ -8,15 +8,34 @@ namespace Text_RPG__Speed_.Script
 {
     public class Game
     {
-
         static Player player;
         static Inventory inventory = new Inventory();
         static Shop shop = new Shop();
 
         public static void Start()
         {
-            CreateCharacter();
             while (true)
+            {
+                InitializeGame();
+                MainGameLoop(); 
+
+                Console.WriteLine("게임을 다시 시작하시겠습니까? (Y/N)");
+                string input = Console.ReadLine().ToUpper();
+                if (input != "Y")
+                {
+                    break; 
+                }
+            }
+        }
+
+        static void InitializeGame()
+        {
+            CreateCharacter();
+        }
+
+        static void MainGameLoop()
+        {
+            while (player.IsAlive()) 
             {
                 Console.Clear();
                 Console.WriteLine("이곳에서 던전으로 들어가기전 활동을 할 수 있습니다.\n");
@@ -48,6 +67,26 @@ namespace Text_RPG__Speed_.Script
                         break;
                 }
             }
+
+            if (!player.IsAlive())
+            {
+                GameOver();
+            }
+        }
+
+       public static void GameOver()
+        {
+            Console.Clear();
+            Console.WriteLine(@"
+  _____                         ____                 
+ / ____|                       / __ \                
+| |  __  __ _ _ __ ___   ___  | |  | |_   _____ _ __ 
+| | |_ |/ _` | '_ ` _ \ / _ \ | |  | \ \ / / _ \ '__|
+| |__| | (_| | | | | | |  __/ | |__| |\ V /  __/ |   
+ \_____|\__,_|_| |_| |_|\___|  \____/  \_/ \___|_|   
+        ");
+            Console.WriteLine("체력이 0이 되어 게임 오버되었습니다...");
+            Console.ReadKey();
         }
 
         static void CreateCharacter()
@@ -104,9 +143,9 @@ namespace Text_RPG__Speed_.Script
                     default:
                         Console.WriteLine("잘못된 입력입니다. 다시 선택해주세요.");
                         Console.ReadKey();
-                        continue; 
+                        continue;
                 }
-                break; 
+                break;
             }
 
             player = new Player(name, job, 1, attack, defense, 100, 1500);
@@ -127,9 +166,9 @@ namespace Text_RPG__Speed_.Script
             Console.WriteLine($"체 력 : {player.Health}");
             Console.WriteLine($"Gold : {player.Gold} G");
             Console.WriteLine("장착 아이템:");
-            Console.WriteLine($"  무기: {player.EquippedWeapon}");
-            Console.WriteLine($"  방어구: {player.EquippedArmor}");
-            Console.WriteLine($"  회복 아이템: {player.EquippedHealingItem}\n");
+            Console.WriteLine($"  무기: {player.EquippedWeapon?.Name ?? "없음"}");
+            Console.WriteLine($"  방어구: {player.EquippedArmor?.Name ?? "없음"}");
+            Console.WriteLine($"  회복 아이템: {player.EquippedHealingItem?.Name ?? "없음"}\n");
             Console.WriteLine("0. 나가기");
             Console.Write("원하시는 행동을 입력해주세요.\n>> ");
 

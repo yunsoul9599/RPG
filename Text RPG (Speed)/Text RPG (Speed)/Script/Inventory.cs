@@ -50,18 +50,17 @@ namespace Text_RPG__Speed_.Script
             {
                 Item selectedItem = Items[itemIndex - 1];
 
-                // 아이템이 이미 장착되어 있는지 확인
                 bool isEquipped = player.EquippedWeapon == selectedItem ||
                                   player.EquippedArmor == selectedItem ||
                                   player.EquippedHealingItem == selectedItem;
 
                 if (isEquipped)
                 {
-                    player.UnequipItem(selectedItem); // 장착 해제
+                    player.UnequipItem(selectedItem); 
                 }
                 else
                 {
-                    player.EquipItem(selectedItem); // 장착
+                    player.EquipItem(selectedItem);
                 }
             }
             else

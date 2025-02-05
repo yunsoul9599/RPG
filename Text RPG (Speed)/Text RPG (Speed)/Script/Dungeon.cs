@@ -56,52 +56,54 @@ namespace Text_RPG__Speed_.Script
 
                 Console.WriteLine($"{difficulty} 난이도의 던전에 입장합니다!");
 
-                // 던전 클리어 가능 여부 판단
                 if (player.DefensePower < recommendedDefense)
                 {
                     Random random = new Random();
-                    int failChance = random.Next(1, 101); // 1 ~ 100 사이의 랜덤 값
-                    if (failChance <= 40) // 40% 확률로 실패
+                    int failChance = random.Next(1, 101); 
+                    if (failChance <= 40)
                     {
                         Console.WriteLine("던전 클리어에 실패했습니다...");
-                        player.ReduceHealthByHalf(); // 체력 절반 감소
+                        player.ReduceHealthByHalf();
                         Console.WriteLine($"체력이 {player.Health}로 감소했습니다.");
+
+                        if (!player.IsAlive())
+                        {
+                            Game.GameOver();
+                            return; 
+                        }
+
                         Console.ReadKey();
-                        continue; // 다시 던전 난이도 선택으로 돌아감
+                        continue; 
                     }
                 }
 
-                // 던전 클리어 성공
                 Console.WriteLine("던전을 클리어했습니다!");
 
-                // 체력 감소 계산
-                int baseHealthLoss = new Random().Next(20, 36); // 20 ~ 35 사이의 랜덤 값
+                int baseHealthLoss = new Random().Next(20, 36); 
                 int defenseDifference = player.DefensePower - recommendedDefense;
-                int totalHealthLoss = Math.Max(baseHealthLoss - defenseDifference, 0); // 체력 감소량은 0보다 작을 수 없음
+                int totalHealthLoss = Math.Max(baseHealthLoss - defenseDifference, 0); 
 
-                player.ReduceHealth(totalHealthLoss); // 체력 감소
+                player.ReduceHealth(totalHealthLoss); 
                 Console.WriteLine($"체력이 {totalHealthLoss}만큼 감소했습니다. 현재 체력: {player.Health}");
 
-                // 보상 계산
                 int baseReward = 0;
-                int baseExp = 0; // 기본 경험치
+                int baseExp = 0; 
                 switch (difficulty)
                 {
                     case Difficulty.Easy:
                         baseReward = 1000;
-                        baseExp = 5; // 쉬움 던전 경험치
+                        baseExp = 5; 
                         break;
                     case Difficulty.Normal:
                         baseReward = 1700;
-                        baseExp = 10; // 보통 던전 경험치
+                        baseExp = 10; 
                         break;
                     case Difficulty.Hard:
                         baseReward = 2500;
-                        baseExp = 20; // 어려움 던전 경험치
+                        baseExp = 20; 
                         break;
                 }
 
-                // 추가 보상 계산 (공격력에 따른 %)
                 Random rand = new Random();
                 int attackBonusPercentage = rand.Next((int)player.AttackPower, (int)((player.AttackPower * 2) + 1)); // 공격력 ~ 공격력 * 2 사이의 %
                 int totalReward = baseReward + (baseReward * attackBonusPercentage / 100);
@@ -114,9 +116,10 @@ namespace Text_RPG__Speed_.Script
                 Console.Write(">> ");
                 string retryInput = Console.ReadLine().ToUpper();
 
+
                 if (retryInput != "Y")
                 {
-                    break; // 던전 선택 메뉴로 돌아감
+                    break; 
                 }
             }
         }
