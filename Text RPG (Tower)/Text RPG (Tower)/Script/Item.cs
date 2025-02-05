@@ -23,10 +23,10 @@ namespace Text_RPG__Speed_.Script
         new ItemInfo("운동복", 0, 10, 600, ItemType.Armor),
         new ItemInfo("헤진옷", 0, 5, 100, ItemType.Armor),
         //회복약
-        new ItemInfo("수술키트", 0, 0, 1500, ItemType.Healing),
-        new ItemInfo("진통제", 0, 0, 1000, ItemType.Healing),
-        new ItemInfo("붕대", 0, 0, 500, ItemType.Healing),
-        new ItemInfo("된장", 0, 0, 100, ItemType.Healing)
+        new ItemInfo("수술키트", 0, 0, 1500, ItemType.Healing, 70),
+        new ItemInfo("진통제", 0, 0, 1000, ItemType.Healing, 50),
+        new ItemInfo("붕대", 0, 0, 500, ItemType.Healing, 30),
+        new ItemInfo("된장", 0, 0, 100, ItemType.Healing, 10)
     };
 
         public string Name { get; private set; }
@@ -34,14 +34,16 @@ namespace Text_RPG__Speed_.Script
         public int DefenseBoost { get; private set; }
         public int Price { get; private set; }
         public ItemType Type { get; private set; }
+        public int HealingAmount { get; private set; }
 
-        public Item(string name, int attackBoost, int defenseBoost, int price, ItemType type)
+        public Item(string name, int attackBoost, int defenseBoost, int price, ItemType type, int healingAmount = 0)
         {
             Name = name;
             AttackBoost = attackBoost;
             DefenseBoost = defenseBoost;
             Price = price;
             Type = type;
+            HealingAmount = healingAmount;
         }
 
         public Item(ItemInfo itemInfo)
@@ -51,6 +53,7 @@ namespace Text_RPG__Speed_.Script
             DefenseBoost = itemInfo.DefenseBoost;
             Price = itemInfo.Price;
             Type = itemInfo.Type;
+            HealingAmount = itemInfo.HealingAmount;
         }
 
         public static implicit operator string(Item item)
@@ -107,14 +110,16 @@ public struct ItemInfo
     public int DefenseBoost;
     public int Price;
     public ItemType Type;
+    public int HealingAmount;
 
-    public ItemInfo(string name, int attackBoost, int defenseBoost, int price, ItemType type)
+    public ItemInfo(string name, int attackBoost, int defenseBoost, int price, ItemType type, int healingAmount = 0)
     {
         Name = name;
         AttackBoost = attackBoost;
         DefenseBoost = defenseBoost;
         Price = price;
         Type = type;
+        HealingAmount = healingAmount; // 회복량 초기화
     }
 }
 

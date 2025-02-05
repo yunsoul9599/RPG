@@ -55,7 +55,7 @@ namespace Text_RPG__Speed_.Script
                         itemInfo += $" (방어력: {Item.ItemList[i].DefenseBoost})";
                         break;
                     case ItemType.Healing:
-                        itemInfo += $" (회복량: 20)";
+                        itemInfo += $" (회복량: {Item.ItemList[i].HealingAmount})";
                         break;
                 }
                 itemInfo += $" - {Item.ItemList[i].Price} G";

@@ -54,7 +54,8 @@ namespace Text_RPG__Speed_.Script
         public void Heal(int amount)
         {
             Health += amount;
-            if (Health > MaxHealth) Health = MaxHealth;
+            if (Health > MaxHealth) Health = MaxHealth; // 체력이 최대치를 넘지 않도록 조정
+            Console.WriteLine($"체력이 {amount}만큼 회복되었습니다. 현재 체력: {Health}");
         }
 
         public bool IsAlive()
